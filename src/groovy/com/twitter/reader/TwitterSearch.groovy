@@ -13,7 +13,7 @@ import com.sentiment.SentimentAPICalculator
 
 class TwitterSearch {
 
-	public static def getTweets(String args, String lang) {
+	public static def getTweets(String args, String lang, topic = null) {
 		Twitter twitter = new TwitterFactory().getInstance();
 		def map = [:]
 		def mapArray = []
@@ -31,13 +31,14 @@ class TwitterSearch {
 					first = false
 				List<Status> tweets = result.getTweets();
 				tweets.each{tweet ->
-//					def calculator = new SentiStrengthCalculator("futbol mundial crack fotball")
+//					def calculator = new SentimentAPICalculator()
 //					def senti = calculator.calculateSentiValue(tweet.getText().toString())
+//					map = [user:tweet?.getUser()?.getScreenName(), text:tweet.getText(), lang: tweet?.getLang(), senti: senti]
 					
-					def calculator = new SentimentAPICalculator()
-					def senti = calculator.calculateSentiValue(tweet.getText().toString())
-					
-					map = [user:tweet?.getUser()?.getScreenName(), text:tweet.getText(), lang: tweet?.getLang(), senti: senti]
+					if(topic)
+						map = [user:tweet?.getUser()?.getScreenName(), text:tweet.getText(), topic: topic]
+					else
+						map = [user:tweet?.getUser()?.getScreenName(), text:tweet.getText()]
 					mapArray.addAll(map)
 				}
 				query = result.nextQuery()

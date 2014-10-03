@@ -9,6 +9,7 @@
 			          <p>Positivas: 70%</p>
 			          <p>Negativas: 20%</p>
 			          <p>Neutral: 10%</p>
+			          <p><input type="button" value="votar"/></p>
 					</div>
 				</div>
 				<div class="col-md-4">
@@ -21,6 +22,7 @@
 			          <p>Positivas: 70%</p>
 			          <p>Negativas: 20%</p>
 			          <p>Neutral: 10%</p>
+			          <p><input type="button" value="votar"/></p>
 			         </div>
 				</div>							
 			</div>
@@ -39,6 +41,7 @@
 			          <p>Positivas: 70%</p>
 			          <p>Negativas: 20%</p>
 			          <p>Neutral: 10%</p>
+			          <p><input type="button" value="votar"/></p>
 					</div>
 				</div>
 				<div class="col-md-4">
@@ -51,6 +54,7 @@
 			          <p>Positivas: 70%</p>
 			          <p>Negativas: 20%</p>
 			          <p>Neutral: 10%</p>
+			          <p><input type="button" value="votar"/></p>
 			         </div>
 				</div>							
 			</div>

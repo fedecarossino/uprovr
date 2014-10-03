@@ -3,7 +3,39 @@ package uprovr
 import com.twitter.reader.TwitterSearch;
 
 class AbmBattleController {
+	
+	def sentimentService
 
+	def newBattle(){
+		try{
+			def content = sentimentService.getPoints(params.text, params.lang, params.cant, params.topic, params.query)
+			response.setStatus(200)
+			render (contentType: "text/json"){
+				content
+			}
+		}catch(e){
+			log.error(e.getMessage())
+		}
+	}
+	
+	def saveBattle(){
+		try{
+			Map requestJson
+			try {
+				requestJson = request?.getJSON()
+			}catch (e) {
+				log.error(e.getMessage())
+			}
+			def content = sentimentService.getPoints(requestJson)
+			response.setStatus(201)
+			render (contentType: "text/json"){
+				content
+			}
+		}catch(e){
+			log.error(e.getMessage())
+		}
+	}
+	
     def getTweets() {
 		try{
 			def content = TwitterSearch.getTweets(params.text, params.lang)
@@ -13,7 +45,6 @@ class AbmBattleController {
 				json
 			}
 		}catch(e){
-			println e.getMessage()
 			log.error(e.getMessage())
 		}
 	}
