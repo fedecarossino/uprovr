@@ -6,12 +6,28 @@ import com.twitter.reader.TwitterSearch;
 import grails.transaction.Transactional
 import groovyx.net.http.RESTClient
 
+import static groovyx.gpars.GParsPool.executeAsync
+import static groovyx.gpars.GParsPool.withPool
+
 @Transactional
 class SentimentService {
 	
 	def getPoints(json){
-		def tweets = getTweets(json)
-		return getSentiment(tweets, json.query)
+		def points = getTweets(json)
+		points.each{key,value ->
+			def adv = new Adversario()
+			def enemy = points.get(key)
+			adv.name = key
+			adv.posSocial = enemy.positivo
+			adv.negSocial = enemy.negativo
+			adv.neuSocial = enemy.neutral
+			if(key == json.name1)
+				adv.urlImage = json.urlImage1
+			else
+				adv.urlImage = json.urlImage2
+			adv.save()
+		}
+		return points
 	}
 
     def getSentiment(json, query) {
@@ -42,8 +58,15 @@ class SentimentService {
     }
 	
 	def getTweets(json){
-		def content = TwitterSearch.getTweets(json.name1, json.lang, json.topic)
-		content.putAt "language", json.lang
-		return content
+		def content
+		def map = [:]
+		withPool(2){
+			[json.name1,json.name2].eachParallel{
+				def tweets = TwitterSearch.getTweets(it, json.lang, json.topic)
+				tweets.putAt "language", json.lang
+				map.put it, getSentiment(tweets, json.query)
+			}
+		}
+		return map
 	}
 }
