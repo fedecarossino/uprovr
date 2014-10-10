@@ -10,6 +10,10 @@ class UrlMappings {
 		"/new_battle"(controller: "abmBattle", parseRequest: true){
 			action = [POST: 'saveBattle']
 		}
+		
+		"/vote"(controller: "home", parseRequest: true){
+			action = [POST: 'vote']
+		}
 
         "/"(controller:"home")
         "500"(view:'/error')
