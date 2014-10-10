@@ -5,7 +5,6 @@ import com.twitter.reader.TwitterSearch;
 
 import grails.transaction.Transactional
 import groovyx.net.http.RESTClient
-
 import static groovyx.gpars.GParsPool.executeAsync
 import static groovyx.gpars.GParsPool.withPool
 
@@ -14,6 +13,11 @@ class SentimentService {
 	
 	def getPoints(json){
 		def points = getTweets(json)
+		def adversarios = []
+		
+		def battle = new Battle()
+		battle.name = "${json.name1} vs ${json.name2}"
+		
 		points.each{key,value ->
 			def adv = new Adversario()
 			def enemy = points.get(key)
@@ -25,8 +29,12 @@ class SentimentService {
 				adv.urlImage = json.urlImage1
 			else
 				adv.urlImage = json.urlImage2
-			adv.save()
+			adv.save(flush:true)
+			battle.addToAdversarios(adv)
 		}
+		
+		battle.save(flush:true)
+		
 		return points
 	}
 

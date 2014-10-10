@@ -1,10 +1,10 @@
 <script src="http://code.highcharts.com/highcharts.js"></script>
 <%--<script src="http://code.highcharts.com/modules/exporting.js"></script>--%>
 
-<div id="${battle}" style="min-width: 310px; height: 200px; max-width: 600px; margin: 0 auto"></div>
+<div id="${battle.name.replace(' ','-')}" style="min-width: 310px; height: 200px; max-width: 600px; margin: 0 auto"></div>
 <script>
 $(function () {
-    $('#${battle}').highcharts({
+    $('#${battle.name.replace(' ','-')}').highcharts({
         chart: {
             plotBackgroundColor: null,
             plotBorderWidth: null,
@@ -36,13 +36,13 @@ $(function () {
             type: 'pie',
             name: 'Win',
             data: [
-                ['${name2}',   ${porc2}],
-                {
-                    name: '${name1}',
-                    y: ${porc1},
-                    sliced: true,
-                    selected: true
-                }
+                   ['${battle.adversarios[1].name}', ${battle.adversarios[1].tendencia}],
+                   {
+                       name: '${battle.adversarios[0].name}',
+                       y: ${battle.adversarios[0].tendencia},
+                       sliced: true,
+                       selected: true
+                   }
             ]
         }]
     });

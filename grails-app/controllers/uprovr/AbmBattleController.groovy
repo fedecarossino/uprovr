@@ -5,18 +5,6 @@ import com.twitter.reader.TwitterSearch;
 class AbmBattleController {
 	
 	def sentimentService
-
-	def newBattle(){
-		try{
-			def content = sentimentService.getPoints(params.text, params.lang, params.cant, params.topic, params.query)
-			response.setStatus(200)
-			render (contentType: "text/json"){
-				content
-			}
-		}catch(e){
-			log.error(e.getMessage())
-		}
-	}
 	
 	def saveBattle(){
 		try{

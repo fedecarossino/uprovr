@@ -17,8 +17,11 @@ hibernate {
 environments {
     development {
         dataSource {
-            dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
-            url = "jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
+            dbCreate = "update"
+			driverClassName = "com.mysql.jdbc.Driver"
+			username = "root"
+			url = "jdbc:mysql://localhost/uprovr"
+			cache.provider_class='com.opensymphony.oscache.hibernate.OSCacheProvider'
         }
     }
     test {
