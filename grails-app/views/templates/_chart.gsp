@@ -36,10 +36,10 @@ $(function () {
             type: 'pie',
             name: 'Win',
             data: [
-                   ['${battle.adversarios[1].name}', ${battle.adversarios[1].tendencia}],
+                   ['${battle.adversarios[1].name}', ${battle.adversarios[1].battleResult}],
                    {
                        name: '${battle.adversarios[0].name}',
-                       y: ${battle.adversarios[0].tendencia},
+                       y: ${battle.adversarios[0].battleResult},
                        sliced: true,
                        selected: true
                    }

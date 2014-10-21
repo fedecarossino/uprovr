@@ -13,6 +13,9 @@ class SentimentService {
 	
 	def getPoints(json){
 		def points = getTweets(json)
+		if(!points["${json.name1}"] && !points["${json.name2}"] )
+			return points
+			
 		def adversarios = []
 		
 		def battle = new Battle()

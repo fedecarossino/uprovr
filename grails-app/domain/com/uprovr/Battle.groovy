@@ -8,6 +8,7 @@ class Battle {
 	String findTags
 	
 //	List adversarios
+//	SortedSet adversarios
 	
 	static hasMany = [adversarios:Adversario]
 	

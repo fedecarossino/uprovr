@@ -43,7 +43,7 @@ grails.views.default.codec = "html"
 
 // The default scope for controllers. May be prototype, session or singleton.
 // If unspecified, controllers are prototype scoped.
-grails.controllers.defaultScope = 'singleton'
+grails.controllers.defaultScope = 'prototype'
 
 // GSP settings
 grails {
@@ -92,6 +92,17 @@ grails.hibernate.osiv.readonly = false
 environments {
     development {
         grails.logging.jul.usebridge = true
+		grails {
+			plugin {
+				facebooksdk {
+					app = 	[
+								id: 1437588916519341,
+								permissions: ['email'],
+								secret: 'e39baab89cfd4280d00baf762ff35b44'
+							]
+				}
+			}
+		}
     }
     production {
         grails.logging.jul.usebridge = false
