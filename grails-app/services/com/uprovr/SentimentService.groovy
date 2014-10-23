@@ -36,6 +36,9 @@ class SentimentService {
 			battle.addToAdversarios(adv)
 		}
 		
+		battle.lastUpdate = new Date()
+		battle.siteId = json.site_id.toUpperCase() ?: "AR"
+		
 		battle.save(flush:true)
 		
 		return points

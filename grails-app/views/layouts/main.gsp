@@ -32,7 +32,7 @@
 	    <link rel="stylesheet" href="${resource(dir:'css',file:'bootstrap.css')}" />
 	    <link rel="stylesheet" href="${resource(dir:'css',file:'carousel.css')}" />
 	    <link rel="stylesheet" href="${resource(dir:'css',file:'application.css')}" />
-				<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 	    <g:javascript src="bootstrap.min.js" />
 		<g:javascript src="docs.min.js" />
 	    <r:layoutResources/>

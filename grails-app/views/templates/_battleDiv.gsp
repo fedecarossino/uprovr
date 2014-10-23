@@ -22,12 +22,21 @@
 	          	<img src="http://oi61.tinypic.com/157ci1w.jpg"><!-- Red -->
 	          </g:elseif>
 	          <p>
-	          	<g:formRemote name="myForm" url="[controller: 'vote', action: '',params: [battleId:battle.id, like:battle.adversarios[0].id]]" update="${(battle.name+'_div').replace(' ','-')}">
-	          		<g:actionSubmit value="Me va" action="${'like_'+battle.adversarios[0].id}" />
-	          	</g:formRemote>
-	          	<g:formRemote name="myForm" url="[controller: 'vote', action: '',params: [battleId:battle.id, notLike:battle.adversarios[0].id]]" update="${(battle.name+'_div').replace(' ','-')}">
-	          		<g:actionSubmit value="No me va" action="${'notLike_'+battle.adversarios[0].id}" />
-	          	</g:formRemote>
+	          	<g:if test="${g.cookie(name: 'upsite') == ''}">
+	          		<br>
+	          		<button class="btn btn-primary" data-toggle="modal" data-target="#votarModel">
+					  Votar
+					</button>
+	          	</g:if>
+	          	<g:else>
+		          	<facebook:loginLink appPermissions="${facebookContext.app.permissions}" elementClass="large primary btn">Votar</facebook:loginLink>
+		          	<g:formRemote name="myForm" url="[controller: 'vote', action: '',params: [battleId:battle.id, like:battle.adversarios[0].id]]" update="${(battle.name+'_div').replace(' ','-')}">
+		          		<g:actionSubmit value="Me va" class="btn btn-success" action="${'like_'+battle.adversarios[0].id}" />
+		          	</g:formRemote>
+		          	<g:formRemote name="myForm" url="[controller: 'vote', action: '',params: [battleId:battle.id, notLike:battle.adversarios[0].id]]" update="${(battle.name+'_div').replace(' ','-')}">
+		          		<g:actionSubmit value="No me va" class="btn btn-danger" style="margin-top: 6px;" action="${'notLike_'+battle.adversarios[0].id}" />
+		          	</g:formRemote>
+	          	</g:else>
 	          </p>
 			</div>
 		</div>
@@ -54,12 +63,21 @@
 	          	<img src="http://oi61.tinypic.com/157ci1w.jpg"><!-- Red -->
 	          </g:elseif>
 	          <p>
-      		 	<g:formRemote name="myForm" url="[controller: 'vote', action: '',params: [battleId:battle.id, like:battle.adversarios[0].id]]" update="${(battle.name+'_div').replace(' ','-')}">
-	          		<g:actionSubmit value="Me va" action="${'like_'+battle.adversarios[0].id}" />
-	          	</g:formRemote>
-	          	<g:formRemote name="myForm" url="[controller: 'vote', action: '',params: [battleId:battle.id, notLike:battle.adversarios[0].id]]" update="${(battle.name+'_div').replace(' ','-')}">
-	          		<g:actionSubmit value="No me va" action="${'notLike_'+battle.adversarios[0].id}" />
-	          	</g:formRemote>
+   	          	<g:if test="${g.cookie(name: 'upsite') == ''}">
+   	          		<br>
+					<button class="btn btn-primary" data-toggle="modal" data-target="#votarModel">
+					  Votar
+					</button>
+	          	</g:if>
+	          	<g:else>
+		          	<facebook:loginLink appPermissions="${facebookContext.app.permissions}" elementClass="large primary btn">Votar</facebook:loginLink>
+	      		 	<g:formRemote name="myForm" url="[controller: 'vote', action: '',params: [battleId:battle.id, like:battle.adversarios[0].id]]" update="${(battle.name+'_div').replace(' ','-')}">
+		          		<g:actionSubmit value="Me va" class="btn btn-success" action="${'like_'+battle.adversarios[1].id}" />
+		          	</g:formRemote>
+		          	<g:formRemote name="myForm" url="[controller: 'vote', action: '',params: [battleId:battle.id, notLike:battle.adversarios[0].id]]" update="${(battle.name+'_div').replace(' ','-')}">
+		          		<g:actionSubmit value="No me va" class="btn btn-danger" style="margin-top: 6px;" action="${'notLike_'+battle.adversarios[1].id}" />
+		          	</g:formRemote>
+		        </g:else>
 	          </p>
 	         </div>
 			</div>							

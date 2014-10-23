@@ -6,6 +6,9 @@ class Battle {
 	
 	String name
 	String findTags
+	String siteId
+	Date lastUpdate
+	Integer totalVotes
 	
 //	List adversarios
 //	SortedSet adversarios
@@ -14,5 +17,8 @@ class Battle {
 	
     static constraints = {
 		findTags nullable:true, blank:true
+		siteId nullable:true, blank:true
+		lastUpdate nullable:true, blank:true
+		totalVotes nullable:true, blank:true
     }
 }

@@ -1,17 +1,23 @@
 package com.uprovr
 
+import org.codehaus.groovy.grails.web.pages.GroovyPagesTemplateEngine;
+
 import uprovr.AbstractLoginUserController
 
 class HomeController extends AbstractLoginUserController{
+	
+	GroovyPagesTemplateEngine groovyPagesTemplateEngine
 
     def index() {
 		println facebookContext
 		println params.user_id
-		def battle = Battle.findAll()
+		params.site_id = g.cookie(name: 'upsite')
+		def battle = getBattles(params)
 		
 		battle.each{
 			it = getBattleInfo(it)
 		}
+		
 		[battle:battle]
 	}
 	
@@ -23,6 +29,10 @@ class HomeController extends AbstractLoginUserController{
 		else if(params.like)
 			adversarios.pos = adversarios.pos+1
 		battle = getBattleInfo(battle)
+		
+		battle.lastUpdate = new Date()
+		battle.save(flush:true)
+		
 		render template:"/templates/battleDiv", model:[battle:battle]
 	}
 	
@@ -49,6 +59,41 @@ class HomeController extends AbstractLoginUserController{
 			println "tendencia ${advAux.name}: "+advAux.tendencia
 		}
 		return battle
+	}
+	
+	def getBattles(params){
+		def siteId = params.site_id.toUpperCase()
+		def offset = params.offset ?: 0
+		def battle
+		if(siteId){
+			battle = Battle.createCriteria().list(max: 2, offset: offset.toInteger()) {
+					eq('siteId', siteId)
+					order('lastUpdate', 'desc')
+					order('totalVotes', 'desc')
+			}
+		}else{
+			battle = Battle.createCriteria().list(max: 2, offset: offset.toInteger()) {
+					order('lastUpdate', 'desc')
+					order('totalVotes', 'desc')
+			}
+		}
+		return battle
+	}
+	
+	def nextBattles(){
+		params.site_id = g.cookie(name: 'upsite')
+		def battle = getBattles(params)
+		if(battle.isEmpty()){
+			response.setStatus(200)
+			render (contentType: "text/json"){
+				[data:""]
+			}
+		}	
+		def myTemplateString = g.render(template: "/templates/nextBattles", model: [battle: battle]).toString()
+		response.setStatus(200)
+		render (contentType: "text/json"){
+			[data:myTemplateString]
+		}
 	}
 
 }

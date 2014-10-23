@@ -36,7 +36,8 @@
 <%--                    <li class="dropdown-header">Instrumentos Medicina</li>--%>
 <%--                    <li><a href="#">Paraloscopia</a></li>--%>
 <%--                  </ul>--%>
-                <li><a href="#contact" data-toggle="modal" data-target=".bs-example-modal-sm">Top Battles</a></li>
+
+                <li><a href="" onclick="document.cookie = 'upsite=';window.location='/uprovr'" data-toggle="modal" data-target=".bs-example-modal-sm">Top Battles</a></li>
                 </li>
               </ul>
             </div>

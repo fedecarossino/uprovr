@@ -2,10 +2,11 @@
   <g:javascript src="jquery-jvectormap-1.2.2.min.js" />
   <g:javascript src="jquery-jvectormap-world-mill-en.js"/>
 <div id="world-map" class="map-size"></div>
+<input hidden="true" id="offsetinput" name="offsetinput" value="0">
 <script>
   $(function(){
 	  var gdpData = {
-			  "AR": 10,
+			  "AR": 0,
 			  "US": 0,
 			  "BR": 0,
 			  "MX": 0,
@@ -41,7 +42,26 @@
           },
 		onRegionClick: function(event, code){
 	    	console.log(code)
+	    	setCookie(code)
+	    	window.location="/uprovr"
 	    }
      });
+
+    function createCookie(name,value,days) {
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime()+(days*24*60*60*1000));
+            var expires = "; expires="+date.toGMTString();
+        }
+        else var expires = "";
+        document.cookie = name+"="+value+expires+"; path=/";
+    }
+
+    function setCookie(cvalue) {
+        var d = new Date();
+        d.setTime(d.getTime() + (10*24*60*60*1000));
+        var expires = "expires="+d.toUTCString();
+        document.cookie = "upsite=" + cvalue + "; " + expires;
+    }
   });
 </script>

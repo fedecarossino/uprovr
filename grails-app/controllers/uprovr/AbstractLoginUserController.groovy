@@ -11,4 +11,9 @@ abstract class AbstractLoginUserController {
 	def beforInterceptor = {
 		params.user_id = facebookContext.user.id
 	}
+	
+	def afterInterceptor = { model ->
+		model.facebookContext = facebookContext
+		model.site_id = params.site_id
+	}
 }

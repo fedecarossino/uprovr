@@ -11,6 +11,10 @@ class UrlMappings {
 			action = [POST: 'saveBattle']
 		}
 		
+		"/nextBattles"(controller: "home", parseRequest: true){
+			action = [GET: 'nextBattles']
+		}
+		
 		"/vote"(controller: "home", parseRequest: true){
 			action = [POST: 'vote']
 		}
