@@ -11,8 +11,9 @@ class Adversario {
 	Integer neg = 0
 	Integer battleResult
 	Integer tendencia
+	String button
 
-	static transients = ["battleResult","tendencia"]
+	static transients = ["battleResult","tendencia","button"]
 	
 	static belongsTo = Battle
 	

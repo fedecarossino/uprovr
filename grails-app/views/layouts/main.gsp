@@ -39,6 +39,7 @@
 	    <g:layoutHead />
 	</head>
 	<body>
+		<facebook:initJS appId="${facebookContext.app.id}"></facebook:initJS>
 		<g:layoutBody/>
 		<r:layoutResources />
 	</body>

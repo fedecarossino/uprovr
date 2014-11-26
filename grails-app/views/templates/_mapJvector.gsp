@@ -43,7 +43,7 @@
 		onRegionClick: function(event, code){
 	    	console.log(code)
 	    	setCookie(code)
-	    	window.location="/uprovr"
+	    	window.location="/"
 	    }
      });
 

@@ -40,6 +40,12 @@
                 <li><a href="" onclick="document.cookie = 'upsite=';window.location='/uprovr'" data-toggle="modal" data-target=".bs-example-modal-sm">Top Battles</a></li>
                 </li>
               </ul>
+              <div class="navbar-collapse collapse" style="float: right;">
+	              <g:if test="${facebookContext.authenticated}">
+						${user?.name}
+	 					<img src="https://graph.facebook.com/${user?.id}/picture">
+				  </g:if>
+			  </div>
             </div>
           </div>
         </div>

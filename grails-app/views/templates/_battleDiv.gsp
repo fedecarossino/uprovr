@@ -29,13 +29,30 @@
 					</button>
 	          	</g:if>
 	          	<g:else>
-		          	<facebook:loginLink appPermissions="${facebookContext.app.permissions}" elementClass="large primary btn">Votar</facebook:loginLink>
-		          	<g:formRemote name="myForm" url="[controller: 'vote', action: '',params: [battleId:battle.id, like:battle.adversarios[0].id]]" update="${(battle.name+'_div').replace(' ','-')}">
-		          		<g:actionSubmit value="Me va" class="btn btn-success" action="${'like_'+battle.adversarios[0].id}" />
-		          	</g:formRemote>
-		          	<g:formRemote name="myForm" url="[controller: 'vote', action: '',params: [battleId:battle.id, notLike:battle.adversarios[0].id]]" update="${(battle.name+'_div').replace(' ','-')}">
-		          		<g:actionSubmit value="No me va" class="btn btn-danger" style="margin-top: 6px;" action="${'notLike_'+battle.adversarios[0].id}" />
-		          	</g:formRemote>
+       				<g:if test="${!facebookContext.authenticated}">
+       					<br>
+			          	<facebook:loginLink appPermissions="${facebookContext.app.permissions}" elementClass="btn btn-primary">Votar</facebook:loginLink>
+					</g:if>
+					<g:else>
+						<g:if test="${battle.adversarios[0].button}">
+							<div>
+								<g:if test="${battle.adversarios[0].button == 'positive'}">
+									<button type="button" class="btn btn-success" disabled="disabled">Me va</button>
+								</g:if>
+								<g:else>
+									<button type="button" class="btn btn-danger" disabled="disabled">No me va</button>
+								</g:else>
+							</div>
+						</g:if>
+						<g:else>
+				          	<g:formRemote name="myForm" url="[controller: 'vote', action: '',params: [battleId:battle.id, like:battle.adversarios[0].id]]" update="${(battle.name+'_div').replace(' ','-')}">
+				          		<g:actionSubmit value="Me va" class="btn btn-success" action="${'like_'+battle.adversarios[0].id}" />
+				          	</g:formRemote>
+				          	<g:formRemote name="myForm" url="[controller: 'vote', action: '',params: [battleId:battle.id, notLike:battle.adversarios[0].id]]" update="${(battle.name+'_div').replace(' ','-')}">
+				          		<g:actionSubmit value="No me va" class="btn btn-danger" style="margin-top: 6px;" action="${'notLike_'+battle.adversarios[0].id}" />
+				          	</g:formRemote>
+			          	</g:else>
+		          	</g:else>
 	          	</g:else>
 	          </p>
 			</div>
@@ -70,13 +87,30 @@
 					</button>
 	          	</g:if>
 	          	<g:else>
-		          	<facebook:loginLink appPermissions="${facebookContext.app.permissions}" elementClass="large primary btn">Votar</facebook:loginLink>
-	      		 	<g:formRemote name="myForm" url="[controller: 'vote', action: '',params: [battleId:battle.id, like:battle.adversarios[0].id]]" update="${(battle.name+'_div').replace(' ','-')}">
-		          		<g:actionSubmit value="Me va" class="btn btn-success" action="${'like_'+battle.adversarios[1].id}" />
-		          	</g:formRemote>
-		          	<g:formRemote name="myForm" url="[controller: 'vote', action: '',params: [battleId:battle.id, notLike:battle.adversarios[0].id]]" update="${(battle.name+'_div').replace(' ','-')}">
-		          		<g:actionSubmit value="No me va" class="btn btn-danger" style="margin-top: 6px;" action="${'notLike_'+battle.adversarios[1].id}" />
-		          	</g:formRemote>
+       				<g:if test="${!facebookContext.authenticated}">
+       					<br>
+			          	<facebook:loginLink appPermissions="${facebookContext.app.permissions}" elementClass="btn btn-primary">Votar</facebook:loginLink>
+					</g:if>
+					<g:else>
+						<g:if test="${battle.adversarios[1].button}">
+							<div>
+								<g:if test="${battle.adversarios[1].button == 'positive'}">
+									<button type="button" class="btn btn-success" disabled="disabled">Me va</button>
+								</g:if>
+								<g:else>
+									<button type="button" class="btn btn-danger" disabled="disabled">No me va</button>
+								</g:else>
+							</div>
+						</g:if>
+						<g:else>
+			      		 	<g:formRemote name="myForm" url="[controller: 'vote', action: '',params: [battleId:battle.id, like:battle.adversarios[1].id]]" update="${(battle.name+'_div').replace(' ','-')}">
+				          		<g:actionSubmit value="Me va" class="btn btn-success" action="${'like_'+battle.adversarios[1].id}" />
+				          	</g:formRemote>
+				          	<g:formRemote name="myForm" url="[controller: 'vote', action: '',params: [battleId:battle.id, notLike:battle.adversarios[1].id]]" update="${(battle.name+'_div').replace(' ','-')}">
+				          		<g:actionSubmit value="No me va" class="btn btn-danger" style="margin-top: 6px;" action="${'notLike_'+battle.adversarios[1].id}" />
+				          	</g:formRemote>
+						</g:else>
+		          	</g:else>
 		        </g:else>
 	          </p>
 	         </div>

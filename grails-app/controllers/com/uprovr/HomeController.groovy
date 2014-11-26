@@ -1,16 +1,17 @@
 package com.uprovr
 
+import grails.plugin.facebooksdk.FacebookGraphClient
 import org.codehaus.groovy.grails.web.pages.GroovyPagesTemplateEngine;
 
 import uprovr.AbstractLoginUserController
+import uprovr.Scored
+import uprovr.UserFacebook;
 
 class HomeController extends AbstractLoginUserController{
 	
 	GroovyPagesTemplateEngine groovyPagesTemplateEngine
 
     def index() {
-		println facebookContext
-		println params.user_id
 		params.site_id = g.cookie(name: 'upsite')
 		def battle = getBattles(params)
 		
@@ -23,11 +24,31 @@ class HomeController extends AbstractLoginUserController{
 	
 	def vote(){
 		def battle = Battle.findById(params.battleId)
-		def adversarios = Adversario.findById(params.notLike ?: params.like)
-		if(params.notLike)
-			adversarios.neg = adversarios.neg+1
-		else if(params.like)
-			adversarios.pos = adversarios.pos+1
+		UserFacebook user
+		if(facebookContext.authenticated){
+			user = saveUser()
+		}else
+			render template:"/templates/battleDiv", model:[battle:battle]
+			
+		def idAdv = params.notLike ?: params.like
+		
+		if(!user.scored.find{it.advId == idAdv.toInteger()}){
+			
+		def adversarios = Adversario.findById(idAdv)
+			if(params.notLike){
+				adversarios.neg = adversarios.neg+1
+				def scored = new Scored(vote: "negative", advId: adversarios.id)
+				scored.save()
+				user.addToScored(scored)
+				user.save()
+			}else if(params.like){
+				adversarios.pos = adversarios.pos+1
+				def scored = new Scored(vote: "positive", advId: adversarios.id)
+				scored.save()
+				user.addToScored(scored)
+				user.save()
+			}
+		}
 		battle = getBattleInfo(battle)
 		
 		battle.lastUpdate = new Date()
@@ -37,6 +58,17 @@ class HomeController extends AbstractLoginUserController{
 	}
 	
 	def getBattleInfo(battle){
+		def user = saveUser()
+		if(user){
+			battle.adversarios.each{advAux ->
+				def aux = user.scored.find{it.advId == advAux.id}
+				if(aux){
+					def vote = aux.vote
+					advAux.button=vote
+				}
+			}
+		}
+		
 		int totalVotosTweets = battle.adversarios[0].posSocial+battle.adversarios[0].negSocial+battle.adversarios[1].posSocial+battle.adversarios[1].negSocial
 		
 		int porcTweets = battle.adversarios[0].posSocial*100/totalVotosTweets
@@ -56,7 +88,7 @@ class HomeController extends AbstractLoginUserController{
 		battle.adversarios.each{advAux ->
 			def tendencia = (advAux.posSocial+advAux.pos-advAux.negSocial-advAux.neg)/(advAux.posSocial+advAux.pos+advAux.negSocial+advAux.neg)*100
 			advAux.tendencia = tendencia
-			println "tendencia ${advAux.name}: "+advAux.tendencia
+//			println "tendencia ${advAux.name}: "+advAux.tendencia
 		}
 		return battle
 	}
@@ -94,6 +126,35 @@ class HomeController extends AbstractLoginUserController{
 		render (contentType: "text/json"){
 			[data:myTemplateString]
 		}
+	}
+	
+	def saveUser(){
+		def user= null
+		if(facebookContext.authenticated){
+			user = UserFacebook.findByFacebookId(facebookContext.user.id)
+			if(!user){
+				def userAux
+				try{
+					def userAccessToken = facebookContext.user.token
+					def facebookClient = new FacebookGraphClient(userAccessToken)
+					userAux = facebookClient.fetchObject("me")
+				}catch(e){
+					return null
+				}
+				user = new UserFacebook()
+				user.facebookId = userAux.id.toString()
+				user.firstName = userAux.first_name
+				user.lastName = userAux.last_name
+				user.locale = userAux.locale
+				user.link = userAux.link
+				user.gender = userAux.gender
+				user.email = userAux.email
+				
+				user.save(flush:true)
+				return user
+			}
+		}
+		return user
 	}
 
 }

@@ -21,6 +21,11 @@ class SentimentService {
 		def battle = new Battle()
 		battle.name = "${json.name1} vs ${json.name2}"
 		
+		println "CANTIDAD DE BATALLAS "+points.size()
+		if(points.size() != 2){
+			return []
+		}
+		
 		points.each{key,value ->
 			def adv = new Adversario()
 			def enemy = points.get(key)
@@ -37,7 +42,7 @@ class SentimentService {
 		}
 		
 		battle.lastUpdate = new Date()
-		battle.siteId = json.site_id.toUpperCase() ?: "AR"
+		battle.siteId = json.siteId?.toUpperCase() ?: "AR"
 		
 		battle.save(flush:true)
 		

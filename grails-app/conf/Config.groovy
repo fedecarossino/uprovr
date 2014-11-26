@@ -92,6 +92,7 @@ grails.hibernate.osiv.readonly = false
 environments {
     development {
         grails.logging.jul.usebridge = true
+		grails.app.context = "/"
 		grails {
 			plugin {
 				facebooksdk {
@@ -130,5 +131,5 @@ log4j = {
            'org.hibernate',
            'net.sf.ehcache.hibernate'
 		   
-   debug sqlMpportalAPI:'org.hibernate.SQL'
+//   debug sqlMpportalAPI:'org.hibernate.SQL'
 }
