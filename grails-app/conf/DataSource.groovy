@@ -32,27 +32,39 @@ environments {
     }
     production {
         dataSource {
-            dbCreate = "update"
-            url = "jdbc:h2:prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
+            dbCreate = "create" //validate
+            driverClassName = "com.mysql.jdbc.Driver"
+            username = "b2ae794f054159"
+            password = "2681f389"
+            url = "jdbc:mysql://us-cdbr-iron-east-01.cleardb.net/heroku_a07b5fd92167917?reconnect=true&useUnicode=yes&characterEncoding=UTF-8"
+            dialect = "com.domain.mysql.dialect.MySQLUTF8InnoDBDialect"
+            cache.provider_class = "com.opensymphony.oscache.hibernate.OSCacheProvider"
+            pooled = true
             properties {
-               // See http://grails.org/doc/latest/guide/conf.html#dataSource for documentation
-               jmxEnabled = true
-               initialSize = 5
-               maxActive = 50
-               minIdle = 5
-               maxIdle = 25
-               maxWait = 10000
-               maxAge = 10 * 60000
-               timeBetweenEvictionRunsMillis = 5000
-               minEvictableIdleTimeMillis = 60000
-               validationQuery = "SELECT 1"
-               validationQueryTimeout = 3
-               validationInterval = 15000
-               testOnBorrow = true
-               testWhileIdle = true
-               testOnReturn = false
-               jdbcInterceptors = "ConnectionState"
-               defaultTransactionIsolation = java.sql.Connection.TRANSACTION_READ_COMMITTED
+                // Check connections
+                validationQuery = "SELECT 1"
+                validationQueryTimeout = 3
+                validationInterval = 15000
+                jmxEnabled = true
+                testOnBorrow = true
+                testWhileIdle = true
+                testOnReturn = false
+                // Evict idle connections
+                minEvictableIdleTimeMillis = 1000 * 60 * 10 // To prevent instances to sit idle in the pool more than 10 minutes
+                timeBetweenEvictionRunsMillis = 1000 * 60 * 1 // 1 minute
+                numTestsPerEvictionRun = 3
+                // Connection pool
+                initialSize = 5
+                maxActive = 50
+                maxIdle = 25
+                minIdle = 5
+                maxWait = 10000 //10 seconds
+                maxAge = 10 * 60000
+                // Remove abandoned connections (not closed)
+                removeAbandoned = true
+                removeAbandonedTimeout = 60 * 15 // 15 minutes
+                jdbcInterceptors = "ConnectionState;StatementCache(max=200)"
+                defaultTransactionIsolation = java.sql.Connection.TRANSACTION_READ_COMMITTED
             }
         }
     }
