@@ -37,7 +37,7 @@ environments {
             username = "b2ae794f054159"
             password = "2681f389"
             url = "jdbc:mysql://us-cdbr-iron-east-01.cleardb.net/heroku_a07b5fd92167917?reconnect=true&useUnicode=yes&characterEncoding=UTF-8"
-            dialect = "com.domain.mysql.dialect.MySQLUTF8InnoDBDialect"
+            dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
             cache.provider_class = "com.opensymphony.oscache.hibernate.OSCacheProvider"
             pooled = true
             properties {
