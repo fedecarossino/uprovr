@@ -32,7 +32,7 @@ environments {
     }
     production {
         dataSource {
-            dbCreate = "create" //validate
+            //dbCreate = "create" //validate
             driverClassName = "com.mysql.jdbc.Driver"
             username = "b2ae794f054159"
             password = "2681f389"

@@ -107,7 +107,17 @@ environments {
     }
     production {
         grails.logging.jul.usebridge = false
-        // TODO: grails.serverURL = "http://www.changeme.com"
+        grails {
+            plugin {
+                facebooksdk {
+                    app = 	[
+                            id: 1437588916519341,
+                            permissions: ['email'],
+                            secret: 'e39baab89cfd4280d00baf762ff35b44'
+                    ]
+                }
+            }
+        }
     }
 }
 
