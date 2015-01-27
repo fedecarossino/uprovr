@@ -14,8 +14,6 @@ classpath
 *stacktrace
 .classpath
 .project
-web-app/WEB-INF/
-web-app/WEB-INF/classes
 stacktrace.log
 dtd/
 .DS_Store
