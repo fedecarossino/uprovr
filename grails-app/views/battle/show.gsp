@@ -42,7 +42,7 @@
 			
 				<g:if test="${battleInstance?.siteId}">
 				<li class="fieldcontain">
-					<span id="siteId-label" class="property-label"><g:message code="battle.siteId.label" default="Site Id: " /></span>
+					<span id="siteId-label" class="property-label"><g:message code="battle.siteId.label" default="Site: " /></span>
 					
 						<span class="property-value" aria-labelledby="siteId-label"><g:fieldValue bean="${battleInstance}" field="siteId"/></span>
 

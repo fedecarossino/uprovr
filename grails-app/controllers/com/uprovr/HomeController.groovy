@@ -97,7 +97,8 @@ class HomeController extends AbstractLoginUserController{
 		}
 		
 		battle.adversarios.each{advAux ->
-			def tendencia = (advAux.posSocial+advAux.pos-advAux.negSocial-advAux.neg)/(advAux.posSocial+advAux.pos+advAux.negSocial+advAux.neg)*100
+            def divisor = advAux.posSocial+advAux.pos+advAux.negSocial+advAux.neg
+			def tendencia = (advAux.posSocial+advAux.pos-advAux.negSocial-advAux.neg)/(divisor == 0 ? 1 : divisor)*100
 			advAux.tendencia = tendencia
 		}
 		return battle
