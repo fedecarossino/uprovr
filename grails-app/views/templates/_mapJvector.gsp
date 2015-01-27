@@ -2,7 +2,7 @@
   <g:javascript src="jquery-jvectormap-1.2.2.min.js" />
   <g:javascript src="jquery-jvectormap-world-mill-en.js"/>
 <div id="world-map" class="map-size"></div>
-<input hidden="true" id="offsetinput" name="offsetinput" value="0">
+<input hidden="true" id="offsetinput" name="offsetinput" value="${offsetInput ?: 0}">
 <script>
   $(function(){
 	  var gdpData = {

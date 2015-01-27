@@ -34,6 +34,10 @@
 	
 		 $( window ).scroll(function() {
 			if ( $(document).scrollTop() == ( $(document).height() - $(window).height() )) {
+                    if($("#offsetinput").val() == 404){
+                        $("#loading").hide()
+                        return
+                    }
 					var offset = 2
 					if($("#offsetinput").val() != "0"){
 						$("#offsetinput").val(parseInt($("#offsetinput").val())+offset)
@@ -44,7 +48,14 @@
 					console.log(offset)
 			  		$("#loading").show()
 <%--						${remoteFunction(controller:'nextBattles', params: "'offset='+offset", onSuccess:'addBattles(data)')};--%>
-					jQuery.ajax({type:'GET',data:'offset='+offset, url:'/uprovr/nextBattles',success:function(data){console.log(data);addBattles(data);},error:function(XMLHttpRequest,textStatus,errorThrown){}});;
+					jQuery.ajax({type:'GET',data:'offset='+offset, url:'/nextBattles?exc=${exc}&textSearch=${textSearch}',
+                        success:function(data){
+                            if(data.data == ""){
+                                $("#offsetinput").val(404);$("#loading").hide()
+                            };
+                            console.log(data);addBattles(data);
+                        },
+                        error:function(XMLHttpRequest,textStatus,errorThrown){console.log("ENTRO POR ACA");$("#offsetinput").val(404)}});;
 				}
 		 })
 

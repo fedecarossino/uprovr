@@ -15,8 +15,6 @@ class Adversario {
 
 	static transients = ["battleResult","tendencia","button"]
 	
-	static belongsTo = Battle
-	
 	static mapping = {
 	 }
 	

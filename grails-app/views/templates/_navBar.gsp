@@ -12,7 +12,7 @@
               </button>
               <a class="navbar-brand" href="/">UPROVR</a>
             </div>
-       	 	<form action="/search/">
+       	 	<form action="/action/search">
 	          	 <div class="input-group search">
 			          <input type="text" class="form-control" name="textSearch">
 			          <span class="input-group-btn">
@@ -36,8 +36,14 @@
 <%--                    <li class="dropdown-header">Instrumentos Medicina</li>--%>
 <%--                    <li><a href="#">Paraloscopia</a></li>--%>
 <%--                  </ul>--%>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Categorias <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <g:each in="${categories}">
+                            <li><a href="/action/category?categoryId=${it.id}">${it.name}</a></li>
+                        </g:each>
+                    </ul>
+                    <li><a href="" onclick="document.cookie = 'upsite=';window.location='/'" data-toggle="modal" data-target=".bs-example-modal-sm">Top Battles</a></li>
 
-                <li><a href="" onclick="document.cookie = 'upsite=';window.location='/uprovr'" data-toggle="modal" data-target=".bs-example-modal-sm">Top Battles</a></li>
                 </li>
               </ul>
               <div class="navbar-collapse collapse" style="float: right;">

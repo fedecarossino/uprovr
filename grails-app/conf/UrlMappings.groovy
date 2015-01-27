@@ -19,6 +19,8 @@ class UrlMappings {
 			action = [POST: 'vote']
 		}
 
+        "/action/$exc"(controller:"home", action: "index")
+
         "/"(controller:"home")
         "500"(view:'/error')
 	}

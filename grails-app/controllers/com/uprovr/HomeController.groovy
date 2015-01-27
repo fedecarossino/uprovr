@@ -12,14 +12,25 @@ class HomeController extends AbstractLoginUserController{
 	GroovyPagesTemplateEngine groovyPagesTemplateEngine
 
     def index() {
+        def message
 		params.site_id = g.cookie(name: 'upsite')
 		def battle = getBattles(params)
-		
+
+        if(!battle){
+            if(params.exc){
+               message = "Try with another search."
+               params.exc = null
+               battle = getBattles(params)
+            }else{
+                message = "No battles in this country yet."
+            }
+        }
+
 		battle.each{
 			it = getBattleInfo(it)
 		}
 		
-		[battle:battle]
+		[battle:battle, categories:Categories.findAll(), exc: params.exc, textSearch: params.textSearch, message:message]
 	}
 	
 	def vote(){
@@ -88,7 +99,6 @@ class HomeController extends AbstractLoginUserController{
 		battle.adversarios.each{advAux ->
 			def tendencia = (advAux.posSocial+advAux.pos-advAux.negSocial-advAux.neg)/(advAux.posSocial+advAux.pos+advAux.negSocial+advAux.neg)*100
 			advAux.tendencia = tendencia
-//			println "tendencia ${advAux.name}: "+advAux.tendencia
 		}
 		return battle
 	}
@@ -99,12 +109,24 @@ class HomeController extends AbstractLoginUserController{
 		def battle
 		if(siteId){
 			battle = Battle.createCriteria().list(max: 2, offset: offset.toInteger()) {
+                    if(params.exc == "search"){
+                        ilike("name", "%${params.textSearch}%")
+                    }
+                    if(params.exc == "category"){
+                        eq('category.id', params.categoryId.toLong())
+                    }
 					eq('siteId', siteId)
 					order('lastUpdate', 'desc')
 					order('totalVotes', 'desc')
 			}
 		}else{
 			battle = Battle.createCriteria().list(max: 2, offset: offset.toInteger()) {
+                    if(params.exc == "search"){
+                        ilike("name", "%${params.textSearch}%")
+                    }
+                    if(params.exc == "category"){
+                        eq('category.id', params.categoryId.toLong())
+                    }
 					order('lastUpdate', 'desc')
 					order('totalVotes', 'desc')
 			}
@@ -114,17 +136,20 @@ class HomeController extends AbstractLoginUserController{
 	
 	def nextBattles(){
 		params.site_id = g.cookie(name: 'upsite')
-		def battle = getBattles(params)
-		if(battle.isEmpty()){
+		def battles = getBattles(params)
+		if(battles.isEmpty()){
 			response.setStatus(200)
 			render (contentType: "text/json"){
 				[data:""]
 			}
-		}	
-		def myTemplateString = g.render(template: "/templates/nextBattles", model: [battle: battle]).toString()
+		}
+        battles.each{
+            it = getBattleInfo(it)
+        }
+		def myTemplateString = g.render(template: "/templates/nextBattles", model: [battle: battles]).toString()
 		response.setStatus(200)
 		render (contentType: "text/json"){
-			[data:myTemplateString]
+			[data:myTemplateString, offsetInput:404]
 		}
 	}
 	

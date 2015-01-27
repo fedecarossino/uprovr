@@ -118,6 +118,6 @@
 		</div>
 	
     <div class="col-md-12">
-        <p class="bg-info" style="padding: 10px;border-radius: 5px;"><span class="glyphicon glyphicon-exclamation-sign" style="color:#31708f;"></span> Algo como para cortar</p>
+        <p class="bg-info" style="padding: 10px;border-radius: 5px;"><span class="glyphicon glyphicon-exclamation-sign" style="color:#31708f;"></span> Last update ${battle.lastUpdate}</p>
      </div>
 </div>

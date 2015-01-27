@@ -25,3 +25,5 @@ prodDb.script
 newrelic.log
 ml-build/
 *.log
+*.idea
+*.iml

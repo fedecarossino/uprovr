@@ -16,8 +16,6 @@ class SentimentService {
 		if(!points["${json.name1}"] && !points["${json.name2}"] )
 			return points
 			
-		def adversarios = []
-		
 		def battle = new Battle()
 		battle.name = "${json.name1} vs ${json.name2}"
 		
@@ -43,6 +41,8 @@ class SentimentService {
 		
 		battle.lastUpdate = new Date()
 		battle.siteId = json.siteId?.toUpperCase() ?: "AR"
+        battle.findTags = json.findTags
+        battle.category = Categories.get(json.categoryId)
 		
 		battle.save(flush:true)
 		
